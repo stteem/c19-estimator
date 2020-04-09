@@ -2,13 +2,13 @@ const data = {
 	region: {
 		name: "Africa",
 		avgAge: 19.7,
-		avgDailyIncomeInUSD: 5,
-		avgDailyIncomePopulation: 0.71
+		avgDailyIncomeInUSD: 4,
+		avgDailyIncomePopulation: 0.73
 	},
 	periodType: "days",
 	timeToElapse: 38,
 	reportedCases: 2747,
-	population: 66622705,
+	population: 92931687,
 	totalHospitalBeds: 678874
 }
 
@@ -31,37 +31,33 @@ const periodType = data => {
 		return days/3;
 	}
 	if (data.periodType === 'months') {
-		var months = data.timeToElapse * 30;
-		return months/3;
+		var days = data.timeToElapse * 30;
+		return days/3;
 	}
 }
 
 const infectionsByRequestedTime_impact = (data) => {
 	var currentlyInfected = data.reportedCases * 10;
 	var factor = periodType(data);
-	console.log('factor ', factor)
 	var toFixed = Math.trunc(factor);
-	console.log('toFixed ', toFixed)
 	return currentlyInfected * Math.pow(2, toFixed);
 }
 
 const infectionsByRequestedTime_severeImpact = (data) => {
 	var currentlyInfected = data.reportedCases * 50;
 	var factor = periodType(data);
-	console.log('factor ', factor)
 	var toFixed = Math.trunc(factor);
-	console.log('toFixed ', toFixed)
 	return currentlyInfected * Math.pow(2, toFixed);
 }
 
 // Challenge 2
 
 const severeCasesByRequestedTime_impact = data => {
-	return 15/100 * infectionsByRequestedTime_impact(data);
+	return Math.trunc(15/100 * infectionsByRequestedTime_impact(data));
 }
 
 const severeCasesByRequestedTime_severeImpact = data => {
-	return 15/100 * infectionsByRequestedTime_severeImpact(data);
+	return Math.trunc(15/100 * infectionsByRequestedTime_severeImpact(data));
 }
 
 const hospitalBedsByRequestedTime_impact = data => {
@@ -76,6 +72,38 @@ const hospitalBedsByRequestedTime_severeImpact = data => {
 
 // Challenge 3
 
+const casesForICUByRequestedTime_impact = data => {
+	return Math.trunc(5/100 * infectionsByRequestedTime_impact(data));
+}
+
+const casesForICUByRequestedTime_severeImpact = data => {
+	return Math.trunc(5/100 * infectionsByRequestedTime_severeImpact(data));
+}
+
+const casesForVentilatorsByRequestedTime_impact = data => {
+	return Math.trunc(2/100 * infectionsByRequestedTime_impact(data));
+}
+
+const casesForVentilatorsByRequestedTime_severeImpact = data => {
+	return Math.trunc(2/100 * infectionsByRequestedTime_severeImpact(data));
+}
+
+const dollarsInFlight_impact = data => {
+	var infectionsByRequestedTime = infectionsByRequestedTime_impact(data);
+	var avgIncome = data.region.avgDailyIncomeInUSD;
+	var population = 0.65 * data.population;
+	var period = periodType(data);
+	return infectionsByRequestedTime * 0.65 * avgIncome * period;
+}
+
+const dollarsInFlight_severeImpact = data => {
+	var infectionsByRequestedTime = infectionsByRequestedTime_severeImpact(data);
+	var avgIncome = data.region.avgDailyIncomeInUSD;
+	var population = 0.65 * data.population;
+	var period = periodType(data);
+	return infectionsByRequestedTime * 0.65 * avgIncome * period;
+}
+
 const covid19ImpactEstimator = (data) => {
 
 	return console.log({
@@ -85,13 +113,19 @@ const covid19ImpactEstimator = (data) => {
 				currentlyInfected: currentlyInfected_impact(data),
 				infectionsByRequestedTime: infectionsByRequestedTime_impact(data),
 				severeCasesByRequestedTime: severeCasesByRequestedTime_impact(data),
-				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_impact(data)
+				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_impact(data),
+				casesForICUByRequestedTime: casesForICUByRequestedTime_impact(data),
+				casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime_impact(data),
+				dollarsInFlight: dollarsInFlight_impact(data)
 			}, // your best case estimation
 			severeImpact: {
 				currentlyInfected: currentlyInfected_severeImpact(data),
 				infectionsByRequestedTime: infectionsByRequestedTime_severeImpact(data),
 				severeCasesByRequestedTime: severeCasesByRequestedTime_severeImpact(data),
-				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_severeImpact(data)
+				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_severeImpact(data),
+				casesForICUByRequestedTime: casesForICUByRequestedTime_severeImpact(data),
+				casesForVentilatorsByRequestedTime: casesForVentilatorsByRequestedTime_severeImpact(data),
+				dollarsInFlight: dollarsInFlight_severeImpact(data)
 			} // your severe case estimation
 		}	
 	})
