@@ -9,7 +9,7 @@ const data = {
 	timeToElapse: 38,
 	reportedCases: 2747,
 	population: 66622705,
-	totalHospitalBeds: 1380614
+	totalHospitalBeds: 678874
 }
 
 // Challenge 1
@@ -64,6 +64,18 @@ const severeCasesByRequestedTime_severeImpact = data => {
 	return 15/100 * infectionsByRequestedTime_severeImpact(data);
 }
 
+const hospitalBedsByRequestedTime_impact = data => {
+	var bedSpace = 35/100 * data.totalHospitalBeds;
+	return Math.trunc(bedSpace - severeCasesByRequestedTime_impact(data));
+}
+
+const hospitalBedsByRequestedTime_severeImpact = data => {
+	var bedSpace = 35/100 * data.totalHospitalBeds;
+	return Math.trunc(bedSpace - severeCasesByRequestedTime_severeImpact(data));
+}
+
+// Challenge 3
+
 const covid19ImpactEstimator = (data) => {
 
 	return console.log({
@@ -72,12 +84,14 @@ const covid19ImpactEstimator = (data) => {
 			impact: {
 				currentlyInfected: currentlyInfected_impact(data),
 				infectionsByRequestedTime: infectionsByRequestedTime_impact(data),
-				severeCasesByRequestedTime: severeCasesByRequestedTime_impact(data)
+				severeCasesByRequestedTime: severeCasesByRequestedTime_impact(data),
+				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_impact(data)
 			}, // your best case estimation
 			severeImpact: {
 				currentlyInfected: currentlyInfected_severeImpact(data),
 				infectionsByRequestedTime: infectionsByRequestedTime_severeImpact(data),
-				severeCasesByRequestedTime: severeCasesByRequestedTime_severeImpact(data)
+				severeCasesByRequestedTime: severeCasesByRequestedTime_severeImpact(data),
+				hospitalBedsByRequestedTime: hospitalBedsByRequestedTime_severeImpact(data)
 			} // your severe case estimation
 		}	
 	})
