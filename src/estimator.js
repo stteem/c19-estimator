@@ -22,7 +22,7 @@ const currentlyInfected_severeImpact = (data) => {
 	return data.reportedCases * 50;
 }
 
-const periodType = data => {
+const periodType = (data) => {
 	if (data.periodType === 'days') {
 		return data.timeToElapse/3;
 	}
@@ -88,20 +88,28 @@ const casesForVentilatorsByRequestedTime_severeImpact = data => {
 	return Math.trunc(2/100 * infectionsByRequestedTime_severeImpact(data));
 }
 
+
+var period = periodType(data);
 const dollarsInFlight_impact = data => {
 	var infectionsByRequestedTime = infectionsByRequestedTime_impact(data);
-	var avgIncome = data.region.avgDailyIncomeInUSD;
-	var population = 0.65 * data.population;
-	var period = periodType(data);
-	return infectionsByRequestedTime * 0.65 * avgIncome * period;
+	var avgIncomePop = data.region.avgDailyIncomePopulation;
+	var avgIncomeUSD = data.region.avgDailyIncomeInUSD;
+	//var period = periodType(data);
+	console.log('Period ', period)
+	console.log('Period 2 ', data.timeToElapse)
+	var dollarsInFlight = (infectionsByRequestedTime * avgIncomePop * avgIncomeUSD) / data.timeToElapse;
+	return Math.trunc(dollarsInFlight);
 }
 
 const dollarsInFlight_severeImpact = data => {
 	var infectionsByRequestedTime = infectionsByRequestedTime_severeImpact(data);
-	var avgIncome = data.region.avgDailyIncomeInUSD;
-	var population = 0.65 * data.population;
-	var period = periodType(data);
-	return infectionsByRequestedTime * 0.65 * avgIncome * period;
+	var avgIncomePop = data.region.avgDailyIncomePopulation;
+	var avgIncomeUSD = data.region.avgDailyIncomeInUSD;
+	
+	console.log('Period ', period)
+	console.log('Period 2 ', data.timeToElapse)
+	var dollarsInFlight = (infectionsByRequestedTime * avgIncomePop * avgIncomeUSD) / data.timeToElapse;
+	return Math.trunc(dollarsInFlight);
 }
 
 const covid19ImpactEstimator = (data) => {
