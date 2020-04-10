@@ -86,7 +86,7 @@ const dollarsInFlightSevereImpact = (dataObj) => {
 };
 
 const covid19ImpactEstimator = (dataObj) => ({
-  //data, // the input data you got
+  // data, // the input data you got
   estimates: {
     impact: {
       currentlyInfected: currentlyInfectedImpact(dataObj),
