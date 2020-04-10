@@ -86,27 +86,25 @@ const dollarsInFlightSevereImpact = (dataObj) => {
 };
 
 const covid19ImpactEstimator = (dataObj) => ({
-  // data, // the input data you got
-  estimates: {
-    impact: {
-      currentlyInfected: currentlyInfectedImpact(dataObj),
-      infectionsByRequestedTime: RequestedTimeImpact(dataObj),
-      severeCasesByRequestedTime: impactCases(dataObj),
-      hospitalBedsByRequestedTime: hospitalBedsImpact(dataObj),
-      casesForICUByRequestedTime: ICUImpact(dataObj),
-      casesForVentilatorsByRequestedTime: VentilatorsImpact(dataObj),
-      dollarsInFlight: dollarsInFlightImpact(dataObj)
-    }, // your best case estimation
-    severeImpact: {
-      currentlyInfected: currentlyInfectedSevereImpact(dataObj),
-      infectionsByRequestedTime: RequestedTimeSevereImpact(dataObj),
-      severeCasesByRequestedTime: severeCases(dataObj),
-      hospitalBedsByRequestedTime: hospitalBedsSevereImpact(dataObj),
-      casesForICUByRequestedTime: ICUSevereImpact(dataObj),
-      casesForVentilatorsByRequestedTime: VentilatorsSevere(dataObj),
-      dollarsInFlight: dollarsInFlightSevereImpact(dataObj)
-    } // your severe case estimation
-  }
+  data: {}, // the input data you got
+  impact: {
+    currentlyInfected: currentlyInfectedImpact(dataObj),
+    infectionsByRequestedTime: RequestedTimeImpact(dataObj),
+    severeCasesByRequestedTime: impactCases(dataObj),
+    hospitalBedsByRequestedTime: hospitalBedsImpact(dataObj),
+    casesForICUByRequestedTime: ICUImpact(dataObj),
+    casesForVentilatorsByRequestedTime: VentilatorsImpact(dataObj),
+    dollarsInFlight: dollarsInFlightImpact(dataObj)
+  }, // your best case estimation
+  severeImpact: {
+    currentlyInfected: currentlyInfectedSevereImpact(dataObj),
+    infectionsByRequestedTime: RequestedTimeSevereImpact(dataObj),
+    severeCasesByRequestedTime: severeCases(dataObj),
+    hospitalBedsByRequestedTime: hospitalBedsSevereImpact(dataObj),
+    casesForICUByRequestedTime: ICUSevereImpact(dataObj),
+    casesForVentilatorsByRequestedTime: VentilatorsSevere(dataObj),
+    dollarsInFlight: dollarsInFlightSevereImpact(dataObj)
+  } // your severe case estimation
 });
 
 
