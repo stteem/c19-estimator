@@ -1,16 +1,3 @@
-const data = {
-  region: {
-    name: 'Africa',
-    avgAge: 19.7,
-    avgDailyIncomeInUSD: 4,
-    avgDailyIncomePopulation: 0.73
-  },
-  periodType: 'days',
-  timeToElapse: 38,
-  reportedCases: 2747,
-  population: 92931687,
-  totalHospitalBeds: 678874
-};
 
 // Challenge 1
 
@@ -39,7 +26,7 @@ const days = (dataObj) => {
   if (dataObj.periodType === 'months') {
     return dataObj.timeToElapse * 30;
   }
-  return data.timeToElapse;
+  return dataObj.timeToElapse;
 };
 
 const RequestedTimeImpact = (dataObj) => {
@@ -98,8 +85,8 @@ const dollarsInFlightSevereImpact = (dataObj) => {
   );
 };
 
-const covid19ImpactEstimator = (dataObj) => console.log({
-  data, // the input data you got
+const covid19ImpactEstimator = (dataObj) => ({
+  //data, // the input data you got
   estimates: {
     impact: {
       currentlyInfected: currentlyInfectedImpact(dataObj),
@@ -122,6 +109,5 @@ const covid19ImpactEstimator = (dataObj) => console.log({
   }
 });
 
-covid19ImpactEstimator(data);
 
-// export default covid19ImpactEstimator;
+export default covid19ImpactEstimator;
